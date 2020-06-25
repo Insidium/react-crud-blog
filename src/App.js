@@ -2,21 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import BlogPosts from './components/BlogPosts';
 import blogData from './data/post_data';
+import BlogPost from './components/BlogPost';
+import Nav from './components/Nav';
 
 const App = () => {
-	const [blogPosts, setBlogPosts] = useState([]);
+	const [blogPosts, setBlogposts] = useState([]);
+
 	useEffect(() => {
-		setBlogPosts(blogData);
+		setBlogposts(blogData);
 	}, []);
 
 	function getPostFromId(id) {
-		return blogPosts.find((post) => post._id === id);
+		//console.log(blogPosts)
+		return blogPosts.find((post) => post._id == id);
 	}
 
 	return (
-		<BrowserRouter>
-			<div>
-				<h1>Blog Posts</h1>
+		<div>
+			<BrowserRouter>
+				<Nav />
+				<h1>Blogs</h1>
 				<Route
 					exact
 					path='/'
@@ -26,11 +31,11 @@ const App = () => {
 					exact
 					path='/posts/:id'
 					render={(props) => (
-						<BlogPosts {...props} post={getPostFromId(props.match.params.id)} />
+						<BlogPost {...props} post={getPostFromId(props.match.params.id)} />
 					)}
 				/>
-			</div>
-		</BrowserRouter>
+			</BrowserRouter>
+		</div>
 	);
 };
 
