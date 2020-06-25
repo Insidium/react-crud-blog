@@ -8,6 +8,11 @@ const App = () => {
 	useEffect(() => {
 		setBlogPosts(blogData);
 	}, []);
+
+	function getPostFromId(id) {
+		return blogPosts.find((post) => post._id === id);
+	}
+
 	return (
 		<BrowserRouter>
 			<div>
@@ -16,7 +21,14 @@ const App = () => {
 					exact
 					path='/'
 					render={(props) => <BlogPosts {...props} postData={blogPosts} />}
-				></Route>
+				/>
+				<Route
+					exact
+					path='/posts/:id'
+					render={(props) => (
+						<BlogPosts {...props} post={getPostFromId(props.match.params.id)} />
+					)}
+				/>
 			</div>
 		</BrowserRouter>
 	);
